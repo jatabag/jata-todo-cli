@@ -14,6 +14,8 @@ cargo install --path .
 
 ## Save an existing tree
 
+Supply the link to one or more trees, and they will be stored locally.
+
 ```sh
 jata https://jatabag.com/tree/2e4e6863-aaaa-aaaa-aaaa-aa6da5ba51eb
 ```
@@ -27,6 +29,8 @@ jata tree --tag errands       # only tagged
 jata focus                    # only what is actionable
 jata focus --flat --sort stale-most
 ```
+
+If just 1 tree is stored locally, then it assumes that tree, otherwise a picker will trigger.
 
 ## Write to a tree
 
