@@ -5,8 +5,6 @@ use std::io;
 use std::path::{Path, PathBuf};
 use uuid::Uuid;
 
-/// The tree ids kept on this machine, one per line, in the directory the
-/// platform sets aside for this program's configuration.
 pub struct Store {
     path: PathBuf,
 }
@@ -50,7 +48,6 @@ impl Store {
         Ok(parse(&contents))
     }
 
-    /// Keep `ids`, and answer with the ones that were not held already.
     pub fn add(&self, ids: &[Uuid]) -> Result<Vec<Uuid>, Error> {
         let mut kept = self.read()?;
         let mut added = Vec::new();

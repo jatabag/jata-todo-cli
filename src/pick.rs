@@ -34,7 +34,6 @@ fn task_label(task: &Task) -> Cow<'_, str> {
     Cow::Borrowed(task.line())
 }
 
-/// One of them, chosen the way fzf chooses: type to narrow, enter to take.
 fn among<T>(
     items: Vec<T>,
     label: for<'a> fn(&'a T) -> Cow<'a, str>,
@@ -55,7 +54,6 @@ where
     }
 }
 
-/// The task to act on, chosen out of the tree's own tasks.
 pub fn a_task(tasks: Vec<Task>) -> Result<Task, Error> {
     if tasks.is_empty() {
         return Err(Error::NoTasks);
@@ -64,7 +62,6 @@ pub fn a_task(tasks: Vec<Task>) -> Result<Task, Error> {
     among(tasks, task_label, "task")
 }
 
-/// The tree to work on: the only one kept, or the one picked out of them.
 pub fn one_of(trees: Vec<Uuid>) -> Result<Uuid, Error> {
     match trees.len() {
         0 => Err(Error::Nothing),

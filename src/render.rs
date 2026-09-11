@@ -1,7 +1,5 @@
 use clap::{Args, ValueEnum};
 
-/// The lens settings a plain-text render honours, named here as they are named
-/// in the query the server reads.
 #[derive(Args)]
 pub struct Options {
     /// Append each task's id, which is what addresses it in every other command
@@ -73,8 +71,6 @@ fn spelling(value: impl ValueEnum) -> String {
 }
 
 impl Options {
-    /// Only the settings that were asked for, so the server's own defaults
-    /// answer for everything else.
     pub fn query(&self) -> Vec<(String, String)> {
         let mut query = Vec::new();
 

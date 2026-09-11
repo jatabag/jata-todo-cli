@@ -2,7 +2,7 @@ use std::env;
 use std::fmt;
 use uuid::Uuid;
 
-const DEFAULT_BASE: &str = "http://localhost";
+const DEFAULT_BASE: &str = "https://jatabag.com";
 
 pub enum Error {
     Unreachable {
@@ -39,7 +39,6 @@ impl fmt::Display for Error {
     }
 }
 
-/// Where the tasks live: `--url`, then `JATABAG_URL`, then a local instance.
 pub fn base(flag: Option<&str>) -> String {
     let chosen = flag
         .map(str::to_owned)
@@ -50,10 +49,6 @@ pub fn base(flag: Option<&str>) -> String {
     chosen.trim().trim_end_matches('/').to_owned()
 }
 
-/// The plain-text render of a tree.
-///
-/// The `.txt` extension asks for it by name rather than by header, so no
-/// negotiation stands between a tree and a program reading it.
 pub fn plaintext(base: &str, tree: Uuid, query: &[(String, String)]) -> Result<String, Error> {
     let url = format!("{base}/tree/{}.txt", tree.hyphenated());
 
@@ -82,10 +77,6 @@ pub fn plaintext(base: &str, tree: Uuid, query: &[(String, String)]) -> Result<S
     }
 }
 
-/// Add a task to a tree.
-///
-/// The timezone rides along as the cookie the web app sends, because the server
-/// dates what it records from it and falls back to UTC without one.
 pub fn create_task(
     base: &str,
     tree: Uuid,
@@ -122,8 +113,6 @@ pub fn create_task(
     }
 }
 
-/// Remove a task, and with `purge` the subtree standing under it rather than
-/// letting those subtasks rise to its parent.
 pub fn delete_task(
     base: &str,
     tree: Uuid,

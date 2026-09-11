@@ -2,12 +2,6 @@ use uuid::Uuid;
 
 const HYPHENATED_LEN: usize = 36;
 
-/// Every tree id held anywhere in `text`, in the order they appear, each one
-/// canonicalized and listed once.
-///
-/// Ids are read wherever they sit rather than only where a url would put them,
-/// because what gets pasted is whatever was to hand: an address bar, a share
-/// sheet, a line of a chat log. A tree names itself the same in all of them.
 pub fn extract(text: &str) -> Vec<Uuid> {
     let bytes = text.as_bytes();
     let mut found: Vec<Uuid> = Vec::new();

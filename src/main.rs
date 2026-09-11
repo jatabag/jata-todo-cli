@@ -11,8 +11,6 @@ use clap::{CommandFactory, Parser, Subcommand};
 use std::process::ExitCode;
 use store::Store;
 
-/// Terminal colours rather than fixed ones, so the palette a terminal is
-/// themed with is the palette this help is drawn in.
 const STYLES: Styles = Styles::styled()
     .usage(AnsiColor::Green.on_default().effects(Effects::BOLD))
     .header(AnsiColor::Yellow.on_default().effects(Effects::BOLD))
@@ -230,7 +228,6 @@ fn delete_task(url: Option<&str>, timezone: Option<&str>, purge: bool) -> Result
     Ok(())
 }
 
-/// The render that names every task, which is the one a task can be picked out of.
 fn naming_tasks() -> Vec<(String, String)> {
     vec![
         ("plaintext[ids]".to_owned(), "on".to_owned()),

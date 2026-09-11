@@ -50,7 +50,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # A statically linked binary runs on any distribution, whatever its libc.
       - name: Install musl's linker
         if: endsWith(matrix.target, '-musl')
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y musl-tools

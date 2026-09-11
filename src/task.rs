@@ -1,7 +1,8 @@
 use uuid::Uuid;
+use uuid::fmt::Hyphenated;
 
-/// A caret and the hyphenated id behind it.
-const MARKER: usize = 37;
+const CARET: char = '^';
+const MARKER: usize = CARET.len_utf8() + Hyphenated::LENGTH;
 
 #[derive(Clone)]
 pub struct Task {
@@ -10,13 +11,10 @@ pub struct Task {
 }
 
 impl Task {
-    /// The line as the render drew it, indent and marker included, so a list of
-    /// them keeps the shape of the tree.
     pub fn line(&self) -> &str {
         &self.line
     }
 
-    /// The task's own words, with the indent and the marker drawing it taken off.
     pub fn text(&self) -> &str {
         let bare = self.line.trim_start();
 
@@ -34,12 +32,6 @@ impl Task {
     }
 }
 
-/// The tasks in a plain-text render asked for with `plaintext[ids]=on`.
-///
-/// A line counts only where it ends with the marker that render appends and
-/// what follows the caret is an id. A caret is ordinary text everywhere else,
-/// and the lines that carry no marker — notes, separators, blanks — are not
-/// tasks to begin with.
 pub fn from_plaintext(body: &str) -> Vec<Task> {
     body.lines().filter_map(marked).collect()
 }
@@ -53,7 +45,7 @@ fn marked(line: &str) -> Option<Task> {
     }
 
     let (text, marker) = line.split_at(caret);
-    let id = Uuid::try_parse(marker.strip_prefix('^')?).ok()?;
+    let id = Uuid::try_parse(marker.strip_prefix(CARET)?).ok()?;
 
     Some(Task {
         id,
